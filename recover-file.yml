@@ -1,0 +1,33 @@
+---
+  - hosts: linux
+    # => Please change these variables to connect
+    # => to your Cohesity Cluster
+    vars:
+        var_cohesity_server: 10.2.171.30
+        var_cohesity_admin: admin
+        var_cohesity_password: Admin123
+        var_validate_certs: False
+        var_cohesity_restore_name: "Ansible Test File Restore"
+        var_cohesity_endpoint: 10.2.159.242
+        var_cohesity_job_name: "protect_physical_linux 10.2.159.242"
+        var_cohesity_files:
+           - "/home/demo-file"
+    roles:
+      - cohesity.cohesity_ansible_role
+    tasks:
+      - name: Restore Files
+        include_role:
+            name: cohesity.cohesity_ansible_role
+            tasks_from: restore_file
+        vars:
+            cohesity_server: "{{ var_cohesity_server }}"
+            cohesity_admin: "{{ var_cohesity_admin }}"
+            cohesity_password: "{{ var_cohesity_password }}"
+            cohesity_validate_certs: "{{ var_validate_certs }}"
+            cohesity_restore_file:
+                name: "{{ var_cohesity_restore_name }}"
+                endpoint: "{{ var_cohesity_endpoint }}"
+                environment: "PhysicalFiles"
+                job_name: "{{ var_cohesity_job_name }}"
+                files: "{{ var_cohesity_files }}"
+                wait_for_job: True

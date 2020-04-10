@@ -1,0 +1,9 @@
+[workstation]
+127.0.0.1 
+
+[linux]
+10.2.165.14
+
+[linux:vars]
+ansible_user=root
+ansible_ssh_private_key_file=/Users/chandrashekar.dashudu/.ssh/id_rsa
